@@ -30,3 +30,6 @@
 #### 6. Melhorando o código com refatoração
 - Refatorando o código
 - Conclusão
+
+Basic writing and formatting syntax [GitHub Help](https://help.github.com/articles/basic-writing-and-formatting-syntax/).
+
