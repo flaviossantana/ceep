@@ -27,17 +27,20 @@ public class ListaNotasActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         notaDAO = new NotaDAO();
 
-//        notaDAO.insere(new Nota("Primeira Nota", "Minha descrição da nota."));
-//        notaDAO.insere(new Nota("Segunda Nota", "Esta nota tem muitos detalhes."));
+        notaDAO.insere(new Nota("Ir ao Supermercado", "Comprar frutas para a semana."));
+        notaDAO.insere(new Nota("Fazer Reunião Diaria:", "Rever com os envolvidos o relacionamento com as ativiades deistribuidas entre si ara a cinferencia das informações repassadas ao front."));
 
+        setAdapter();
 
-        for (int i = 1; i <= 10000; i++){
+    }
+
+    private void setAdapter() {
+        notas.setAdapter(new ListaNotasAdapter(this, notaDAO.todos()));
+    }
+
+    private void gerarNotas(int qtd) {
+        for (int i = 1; i <= qtd; i++){
             notaDAO.insere(new Nota("Título " + i, "Descrição " + i));
         }
-
-        notas.setAdapter(new ListaNotasAdapter(this, notaDAO.todos()));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        notas.setLayoutManager(layoutManager);
-
     }
 }
