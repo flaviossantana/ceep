@@ -2,7 +2,6 @@ package br.com.alura.ceep.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import br.com.alura.ceep.R;
@@ -22,6 +21,7 @@ public class ListaNotasActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_lista_notas);
 
         ButterKnife.bind(this);
@@ -39,7 +39,7 @@ public class ListaNotasActivity extends AppCompatActivity {
     }
 
     private void gerarNotas(int qtd) {
-        for (int i = 1; i <= qtd; i++){
+        for (int i = 1; i <= qtd; i++) {
             notaDAO.insere(new Nota("Título " + i, "Descrição " + i));
         }
     }
