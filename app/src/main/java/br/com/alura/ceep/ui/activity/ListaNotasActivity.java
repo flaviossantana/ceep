@@ -1,8 +1,10 @@
 package br.com.alura.ceep.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import br.com.alura.ceep.R;
 import br.com.alura.ceep.dao.NotaDAO;
@@ -10,6 +12,7 @@ import br.com.alura.ceep.model.Nota;
 import br.com.alura.ceep.ui.adapter.recycler.ListaNotasAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ListaNotasActivity extends AppCompatActivity {
 
@@ -36,6 +39,12 @@ public class ListaNotasActivity extends AppCompatActivity {
 
     private void setAdapter() {
         notas.setAdapter(new ListaNotasAdapter(this, notaDAO.todos()));
+    }
+
+    @OnClick(R.id.lista_notas_insere_nota)
+    public void on(View view){
+        Intent irFormulario = new Intent(this, FormuarioNotasActivity.class);
+        startActivity(irFormulario);
     }
 
     private void gerarNotas(int qtd) {
