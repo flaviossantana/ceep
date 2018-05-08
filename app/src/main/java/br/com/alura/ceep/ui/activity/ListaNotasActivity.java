@@ -33,8 +33,12 @@ public class ListaNotasActivity extends AppCompatActivity {
         notaDAO.insere(new Nota("Ir ao Supermercado", "Comprar frutas para a semana."));
         notaDAO.insere(new Nota("Fazer Reunião Diaria:", "Rever com os envolvidos o relacionamento com as ativiades deistribuidas entre si ara a cinferencia das informações repassadas ao front."));
 
-        setAdapter();
+    }
 
+    @Override
+    protected void onResume() {
+        setAdapter();
+        super.onResume();
     }
 
     private void setAdapter() {
