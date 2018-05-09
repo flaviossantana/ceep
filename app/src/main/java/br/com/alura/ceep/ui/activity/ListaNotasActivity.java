@@ -27,42 +27,26 @@ public class ListaNotasActivity extends AppCompatActivity {
 
     private NotaDAO notaDAO;
     private ListaNotasAdapter adapter;
-    private List<Nota> todasNotas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_lista_notas);
 
         ButterKnife.bind(this);
         notaDAO = new NotaDAO();
 
-
-        criarNotas();
-
-        todasNotas = notaDAO.todos();
-
         setAdapter();
-
     }
 
-    private void criarNotas() {
-        notaDAO.insere(new Nota("Ir ao Supermercado", "Comprar frutas para a semana."));
-        notaDAO.insere(new Nota("Fazer Reunião Diaria:", "Rever com os envolvidos o relacionamento com as ativiades deistribuidas entre si ara a cinferencia das informações repassadas ao front."));
+    private void setAdapter() {
+        adapter = new ListaNotasAdapter(this,  notaDAO.todos());
+        notas.setAdapter(adapter);
     }
 
     @Override
     protected void onResume() {
-        todasNotas.clear();
-        todasNotas.addAll(notaDAO.todos());
-        adapter.notifyDataSetChanged();
         super.onResume();
-    }
-
-    private void setAdapter() {
-        adapter = new ListaNotasAdapter(this, todasNotas);
-        notas.setAdapter(adapter);
     }
 
     @OnClick(R.id.lista_notas_insere_nota)
