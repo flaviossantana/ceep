@@ -16,8 +16,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static br.com.alura.ceep.ui.activity.FormuarioNotasActivity.EXTRA_NOTA;
+import static br.com.alura.ceep.ui.activity.FormuarioNotasActivity.RESULT_CODE_NOTA_CRIADA;
+
 public class ListaNotasActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE_FORM = 1;
     @BindView(R.id.lista_notas_recyclerview)
     public RecyclerView notas;
 
@@ -35,13 +39,17 @@ public class ListaNotasActivity extends AppCompatActivity {
         notaDAO = new NotaDAO();
 
 
-        notaDAO.insere(new Nota("Ir ao Supermercado", "Comprar frutas para a semana."));
-        notaDAO.insere(new Nota("Fazer Reunião Diaria:", "Rever com os envolvidos o relacionamento com as ativiades deistribuidas entre si ara a cinferencia das informações repassadas ao front."));
+        criarNotas();
 
         todasNotas = notaDAO.todos();
 
         setAdapter();
 
+    }
+
+    private void criarNotas() {
+        notaDAO.insere(new Nota("Ir ao Supermercado", "Comprar frutas para a semana."));
+        notaDAO.insere(new Nota("Fazer Reunião Diaria:", "Rever com os envolvidos o relacionamento com as ativiades deistribuidas entre si ara a cinferencia das informações repassadas ao front."));
     }
 
     @Override
@@ -60,15 +68,15 @@ public class ListaNotasActivity extends AppCompatActivity {
     @OnClick(R.id.lista_notas_insere_nota)
     public void onClickAddNota(View view){
         Intent irFormulario = new Intent(this, FormuarioNotasActivity.class);
-        startActivityForResult(irFormulario, 1);
+        startActivityForResult(irFormulario, REQUEST_CODE_FORM);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if(requestCode == 1 && resultCode == 2 && data.hasExtra("nota")){
+        if(requestCode == REQUEST_CODE_FORM && resultCode == RESULT_CODE_NOTA_CRIADA && data.hasExtra(EXTRA_NOTA)){
 
-            Nota nota = (Nota) data.getSerializableExtra("nota");
+            Nota nota = (Nota) data.getSerializableExtra(EXTRA_NOTA);
             adapter.add(nota);
         }
 
