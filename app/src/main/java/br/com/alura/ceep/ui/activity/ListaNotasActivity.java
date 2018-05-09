@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.util.List;
+
 import br.com.alura.ceep.R;
 import br.com.alura.ceep.dao.NotaDAO;
 import br.com.alura.ceep.model.Nota;
@@ -20,6 +22,8 @@ public class ListaNotasActivity extends AppCompatActivity {
     public RecyclerView notas;
 
     private NotaDAO notaDAO;
+    private ListaNotasAdapter adapter;
+    private List<Nota> todasNotas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,23 +34,31 @@ public class ListaNotasActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         notaDAO = new NotaDAO();
 
+
         notaDAO.insere(new Nota("Ir ao Supermercado", "Comprar frutas para a semana."));
         notaDAO.insere(new Nota("Fazer Reunião Diaria:", "Rever com os envolvidos o relacionamento com as ativiades deistribuidas entre si ara a cinferencia das informações repassadas ao front."));
+
+        todasNotas = notaDAO.todos();
+
+        setAdapter();
 
     }
 
     @Override
     protected void onResume() {
-        setAdapter();
+        todasNotas.clear();
+        todasNotas.addAll(notaDAO.todos());
+        adapter.notifyDataSetChanged();
         super.onResume();
     }
 
     private void setAdapter() {
-        notas.setAdapter(new ListaNotasAdapter(this, notaDAO.todos()));
+        adapter = new ListaNotasAdapter(this, todasNotas);
+        notas.setAdapter(adapter);
     }
 
     @OnClick(R.id.lista_notas_insere_nota)
-    public void on(View view){
+    public void onClickAddNota(View view){
         Intent irFormulario = new Intent(this, FormuarioNotasActivity.class);
         startActivity(irFormulario);
     }
