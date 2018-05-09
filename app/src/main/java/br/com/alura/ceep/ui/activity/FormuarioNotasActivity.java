@@ -1,5 +1,6 @@
 package br.com.alura.ceep.ui.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -43,11 +44,22 @@ public class FormuarioNotasActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if(item.getItemId() == R.id.menu_form_acao){
-            new NotaDAO().insere(new Nota(titulo.getText().toString(), descricao.getText().toString()));
+
+            Nota nota = new Nota(titulo.getText().toString(), descricao.getText().toString());
+            new NotaDAO().insere(nota);
+
+            enviarNotaTela(nota);
+
             finish();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void enviarNotaTela(Nota nota) {
+        Intent irListaNota = new Intent();
+        irListaNota.putExtra("nota", nota);
+        setResult(2, irListaNota);
     }
 
 }

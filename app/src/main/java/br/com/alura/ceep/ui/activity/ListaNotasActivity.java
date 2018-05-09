@@ -60,7 +60,19 @@ public class ListaNotasActivity extends AppCompatActivity {
     @OnClick(R.id.lista_notas_insere_nota)
     public void onClickAddNota(View view){
         Intent irFormulario = new Intent(this, FormuarioNotasActivity.class);
-        startActivity(irFormulario);
+        startActivityForResult(irFormulario, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(requestCode == 1 && resultCode == 2 && data.hasExtra("nota")){
+
+            Nota nota = (Nota) data.getSerializableExtra("nota");
+            adapter.add(nota);
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void gerarNotas(int qtd) {

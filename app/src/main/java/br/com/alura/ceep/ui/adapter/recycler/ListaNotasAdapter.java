@@ -44,6 +44,11 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
         holder.descricao.setText(nota.getDescricao());
     }
 
+    public void add(Nota nota) {
+        notas.add(nota);
+        notifyDataSetChanged();
+    }
+
     public class NotasViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.item_nota_titulo)
