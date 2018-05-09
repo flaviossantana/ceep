@@ -1,8 +1,10 @@
 package br.com.alura.ceep.ui.activity;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -23,6 +25,7 @@ public class FormuarioNotasActivity extends AppCompatActivity {
     @BindView(R.id.form_descricao)
     public EditText descricao;
 
+    private NotaDAO notaDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,7 @@ public class FormuarioNotasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_formuario_notas);
 
         ButterKnife.bind(this);
+        notaDAO = new NotaDAO();
 
     }
 
@@ -43,10 +47,10 @@ public class FormuarioNotasActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(item.getItemId() == R.id.menu_form_acao){
+        if(isSalvar(item)){
 
-            Nota nota = new Nota(titulo.getText().toString(), descricao.getText().toString());
-            new NotaDAO().insere(nota);
+            Nota nota = new Nota(getText(titulo), getText(descricao));
+            notaDAO.insere(nota);
 
             enviarNotaTela(nota);
 
@@ -56,8 +60,17 @@ public class FormuarioNotasActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @NonNull
+    private String getText(EditText editText) {
+        return editText.getText().toString();
+    }
+
+    private boolean isSalvar(MenuItem item) {
+        return item.getItemId() == R.id.menu_form_acao;
+    }
+
     private void enviarNotaTela(Nota nota) {
-        Intent irListaNota = new Intent();
+        Intent irListaNota = new Intent().putExtra("nota", nota);
         irListaNota.putExtra("nota", nota);
         setResult(2, irListaNota);
     }
