@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static br.com.alura.ceep.ui.activity.FormuarioNotasActivity.EXTRA_NOTA;
+import static br.com.alura.ceep.ui.activity.FormuarioNotasActivity.EXTRA_POSICAO;
 import static br.com.alura.ceep.ui.activity.FormuarioNotasActivity.RESULT_CODE_NOTA_CRIADA;
 
 public class ListaNotasActivity extends AppCompatActivity {
@@ -47,13 +48,13 @@ public class ListaNotasActivity extends AppCompatActivity {
         notas.setAdapter(adapter);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(Nota nota) {
+            public void onItemClick(int posicao, Nota nota) {
 
                 Intent irFormulario = new Intent(ListaNotasActivity.this, FormuarioNotasActivity.class);
                 irFormulario.putExtra(EXTRA_NOTA, nota);
-                startActivityForResult(irFormulario, REQUEST_CODE_FORM_EDIT);
+                irFormulario.putExtra(EXTRA_POSICAO, posicao);
 
-                Toast.makeText(ListaNotasActivity.this, nota.getTitulo(), Toast.LENGTH_SHORT).show();
+                startActivityForResult(irFormulario, REQUEST_CODE_FORM_EDIT);
             }
         });
     }
@@ -75,13 +76,16 @@ public class ListaNotasActivity extends AppCompatActivity {
         if(requestCode == REQUEST_CODE_FORM && resultCode == RESULT_CODE_NOTA_CRIADA && data.hasExtra(EXTRA_NOTA)){
 
             Nota nota = (Nota) data.getSerializableExtra(EXTRA_NOTA);
+            notaDAO.insere(nota);
             adapter.add(nota);
         }
 
-        if(requestCode == REQUEST_CODE_FORM_EDIT && resultCode == RESULT_CODE_NOTA_CRIADA && data.hasExtra(EXTRA_NOTA)){
+        if(requestCode == REQUEST_CODE_FORM_EDIT && resultCode == RESULT_CODE_NOTA_CRIADA && data.hasExtra(EXTRA_NOTA) && data.hasExtra(EXTRA_POSICAO)){
 
             Nota nota = (Nota) data.getSerializableExtra(EXTRA_NOTA);
-            adapter.add(nota);
+            int posicao = data.getIntExtra(EXTRA_POSICAO, -1);
+            notaDAO.altera(posicao, nota);
+            adapter.altera(posicao, nota);
         }
 
         super.onActivityResult(requestCode, resultCode, data);
