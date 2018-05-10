@@ -7,13 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.List;
-
 import br.com.alura.ceep.R;
 import br.com.alura.ceep.dao.NotaDAO;
 import br.com.alura.ceep.model.Nota;
 import br.com.alura.ceep.ui.adapter.recycler.ListaNotasAdapter;
-import br.com.alura.ceep.ui.adapter.recycler.OnItemClickListener;
+import br.com.alura.ceep.ui.adapter.recycler.listener.OnItemClickListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -38,6 +36,8 @@ public class ListaNotasActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         notaDAO = new NotaDAO();
 
+        gerarNotas(4);
+
         setAdapter();
     }
 
@@ -47,6 +47,11 @@ public class ListaNotasActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(Nota nota) {
+
+                Intent irFormulario = new Intent(ListaNotasActivity.this, FormuarioNotasActivity.class);
+                irFormulario.putExtra(EXTRA_NOTA, nota);
+                startActivity(irFormulario);
+
                 Toast.makeText(ListaNotasActivity.this, nota.getTitulo(), Toast.LENGTH_SHORT).show();
             }
         });

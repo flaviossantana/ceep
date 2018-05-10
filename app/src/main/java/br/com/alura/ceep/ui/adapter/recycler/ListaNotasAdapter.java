@@ -12,6 +12,7 @@ import java.util.List;
 
 import br.com.alura.ceep.R;
 import br.com.alura.ceep.model.Nota;
+import br.com.alura.ceep.ui.adapter.recycler.listener.OnItemClickListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

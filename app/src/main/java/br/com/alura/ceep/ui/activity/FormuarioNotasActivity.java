@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import java.io.Serializable;
+
 import br.com.alura.ceep.R;
 import br.com.alura.ceep.dao.NotaDAO;
 import br.com.alura.ceep.model.Nota;
@@ -34,6 +36,15 @@ public class FormuarioNotasActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         notaDAO = new NotaDAO();
+
+        if(getIntent().hasExtra(EXTRA_NOTA)){
+            Nota nota = (Nota) getIntent().getSerializableExtra(EXTRA_NOTA);
+            titulo.setText(nota.getTitulo());
+            descricao.setText(nota.getDescricao());
+        }
+
+
+
     }
 
     @Override

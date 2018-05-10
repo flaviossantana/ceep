@@ -1,4 +1,4 @@
-package br.com.alura.ceep.ui.adapter.recycler;
+package br.com.alura.ceep.ui.adapter.recycler.listener;
 
 import br.com.alura.ceep.model.Nota;
 
