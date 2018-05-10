@@ -22,6 +22,7 @@ import static br.com.alura.ceep.ui.activity.FormuarioNotasActivity.RESULT_CODE_N
 public class ListaNotasActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_FORM = 1;
+    public static final int REQUEST_CODE_FORM_EDIT = 2;
     @BindView(R.id.lista_notas_recyclerview)
     public RecyclerView notas;
 
@@ -50,7 +51,7 @@ public class ListaNotasActivity extends AppCompatActivity {
 
                 Intent irFormulario = new Intent(ListaNotasActivity.this, FormuarioNotasActivity.class);
                 irFormulario.putExtra(EXTRA_NOTA, nota);
-                startActivity(irFormulario);
+                startActivityForResult(irFormulario, REQUEST_CODE_FORM_EDIT);
 
                 Toast.makeText(ListaNotasActivity.this, nota.getTitulo(), Toast.LENGTH_SHORT).show();
             }
@@ -72,6 +73,12 @@ public class ListaNotasActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if(requestCode == REQUEST_CODE_FORM && resultCode == RESULT_CODE_NOTA_CRIADA && data.hasExtra(EXTRA_NOTA)){
+
+            Nota nota = (Nota) data.getSerializableExtra(EXTRA_NOTA);
+            adapter.add(nota);
+        }
+
+        if(requestCode == REQUEST_CODE_FORM_EDIT && resultCode == RESULT_CODE_NOTA_CRIADA && data.hasExtra(EXTRA_NOTA)){
 
             Nota nota = (Nota) data.getSerializableExtra(EXTRA_NOTA);
             adapter.add(nota);

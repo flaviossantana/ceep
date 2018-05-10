@@ -42,9 +42,6 @@ public class FormuarioNotasActivity extends AppCompatActivity {
             titulo.setText(nota.getTitulo());
             descricao.setText(nota.getDescricao());
         }
-
-
-
     }
 
     @Override
