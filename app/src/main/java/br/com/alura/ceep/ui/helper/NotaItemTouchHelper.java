@@ -6,6 +6,11 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import br.com.alura.ceep.dao.NotaDAO;
 import br.com.alura.ceep.ui.adapter.recycler.ListaNotasAdapter;
 
+import static android.support.v7.widget.helper.ItemTouchHelper.DOWN;
+import static android.support.v7.widget.helper.ItemTouchHelper.LEFT;
+import static android.support.v7.widget.helper.ItemTouchHelper.RIGHT;
+import static android.support.v7.widget.helper.ItemTouchHelper.UP;
+
 public class NotaItemTouchHelper extends ItemTouchHelper.Callback {
 
     private ListaNotasAdapter adapter;
@@ -16,12 +21,15 @@ public class NotaItemTouchHelper extends ItemTouchHelper.Callback {
 
     @Override
     public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-        int marcacaoDeslize = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
-        return makeMovementFlags(0, marcacaoDeslize);
+        int marcacaoDeslize = LEFT | RIGHT;
+        int marcacaoArraste = LEFT | RIGHT | UP | DOWN;
+        return makeMovementFlags(marcacaoArraste, marcacaoDeslize);
     }
 
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+        new NotaDAO().troca(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+        adapter.troca(viewHolder.getAdapterPosition(), target.getAdapterPosition());
         return false;
     }
 
