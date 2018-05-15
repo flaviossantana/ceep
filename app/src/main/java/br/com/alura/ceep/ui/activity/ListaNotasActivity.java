@@ -46,9 +46,13 @@ public class ListaNotasActivity extends AppCompatActivity {
 
         setAdapter();
 
+        touchHelper();
+
+    }
+
+    private void touchHelper() {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new NotaItemTouchHelper());
         itemTouchHelper.attachToRecyclerView(notas);
-
     }
 
     private void setAdapter() {
