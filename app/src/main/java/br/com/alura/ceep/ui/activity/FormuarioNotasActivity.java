@@ -21,6 +21,7 @@ public class FormuarioNotasActivity extends AppCompatActivity {
     public static final int RESULT_CODE_NOTA_CRIADA = 2;
     public static final String EXTRA_NOTA = "nota";
     public static final String EXTRA_POSICAO = "POSICAO";
+    public static final int POSICAO_INVALIDA = -1;
 
     @BindView(R.id.form_titulo)
     public EditText titulo;
@@ -29,7 +30,7 @@ public class FormuarioNotasActivity extends AppCompatActivity {
     public EditText descricao;
 
     private NotaDAO notaDAO;
-    private int posicao;
+    private int posicao = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +40,8 @@ public class FormuarioNotasActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         notaDAO = new NotaDAO();
 
-        if(getIntent().hasExtra(EXTRA_NOTA) && getIntent().hasExtra(EXTRA_POSICAO)){
-            posicao = getIntent().getIntExtra(EXTRA_POSICAO, -1);
+        if(getIntent().hasExtra(EXTRA_NOTA)){
+            posicao = getIntent().getIntExtra(EXTRA_POSICAO, POSICAO_INVALIDA);
             Nota nota = (Nota) getIntent().getSerializableExtra(EXTRA_NOTA);
             titulo.setText(nota.getTitulo());
             descricao.setText(nota.getDescricao());

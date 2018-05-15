@@ -1,9 +1,11 @@
 package br.com.alura.ceep.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.Toast;
 
@@ -12,6 +14,7 @@ import br.com.alura.ceep.dao.NotaDAO;
 import br.com.alura.ceep.model.Nota;
 import br.com.alura.ceep.ui.adapter.recycler.ListaNotasAdapter;
 import br.com.alura.ceep.ui.adapter.recycler.listener.OnItemClickListener;
+import br.com.alura.ceep.ui.helper.NotaItemTouchHelper;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,6 +27,7 @@ public class ListaNotasActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_FORM = 1;
     public static final int REQUEST_CODE_FORM_EDIT = 2;
+
     @BindView(R.id.lista_notas_recyclerview)
     public RecyclerView notas;
 
@@ -41,6 +45,10 @@ public class ListaNotasActivity extends AppCompatActivity {
         gerarNotas(4);
 
         setAdapter();
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new NotaItemTouchHelper());
+        itemTouchHelper.attachToRecyclerView(notas);
+
     }
 
     private void setAdapter() {
