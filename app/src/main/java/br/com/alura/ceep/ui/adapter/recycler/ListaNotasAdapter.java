@@ -60,6 +60,11 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
         notifyDataSetChanged();
     }
 
+    public void remove(int posicao) {
+        notas.remove(posicao);
+        notifyDataSetChanged();
+    }
+
     public class NotasViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.item_nota_titulo)

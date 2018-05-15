@@ -1,13 +1,11 @@
 package br.com.alura.ceep.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
-import android.widget.Toast;
 
 import br.com.alura.ceep.R;
 import br.com.alura.ceep.dao.NotaDAO;
@@ -51,7 +49,7 @@ public class ListaNotasActivity extends AppCompatActivity {
     }
 
     private void touchHelper() {
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new NotaItemTouchHelper());
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new NotaItemTouchHelper(adapter));
         itemTouchHelper.attachToRecyclerView(notas);
     }
 
