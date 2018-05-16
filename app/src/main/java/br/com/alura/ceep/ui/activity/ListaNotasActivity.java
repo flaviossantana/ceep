@@ -42,7 +42,7 @@ public class ListaNotasActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         notaDAO = new NotaDAO();
 
-        gerarNotas(4);
+        gerarNotas(22);
 
         setAdapter();
 
