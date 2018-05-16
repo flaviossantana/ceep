@@ -25,6 +25,7 @@ public class ListaNotasActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_FORM = 1;
     public static final int REQUEST_CODE_FORM_EDIT = 2;
+    public static final String TITLE_BAR = "Notas";
 
     @BindView(R.id.lista_notas_recyclerview)
     public RecyclerView notas;
@@ -36,6 +37,7 @@ public class ListaNotasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_notas);
+        setTitle(TITLE_BAR);
 
         ButterKnife.bind(this);
         notaDAO = new NotaDAO();
